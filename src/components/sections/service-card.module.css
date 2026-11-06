@@ -1,0 +1,241 @@
+/* Tarjeta negra (el negro del sitio) sobre el gris de la pagina, con
+   esquinas amplias. El texto ocupa la cabeza y la foto llena el resto,
+   fundida desde el color de la tarjeta. */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 26px;
+  background: #020303;
+}
+
+/* Alta: columna de Audio. */
+.tall {
+  height: 760px;
+}
+
+/* Apaisada: cabecera de Pantallas, a lo ancho de la columna. */
+.wide {
+  width: min(1100px, 100%);
+  height: 640px;
+  margin-inline: auto;
+}
+
+/* Partida: texto a la izquierda, centrado en vertical, y video a la
+   derecha a toda la altura. */
+.split {
+  flex-direction: row;
+  width: min(850px, 100%);
+  height: 650px;
+}
+
+.text {
+  position: relative;
+  z-index: 1;
+  padding: 34px 32px 0;
+}
+
+.split .text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  padding: 36px 28px 36px 36px;
+}
+
+.wide .text {
+  max-width: 640px;
+  padding: 40px 44px 0;
+}
+
+.eyebrow {
+  margin: 0;
+  color: rgb(221 221 224 / 55%);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 14px 0 0;
+  color: hsl(38 35% 86%);
+  font-family: var(--font-inter-tight), var(--font-sans);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  text-wrap: balance;
+}
+
+.wide .title {
+  font-size: 40px;
+  letter-spacing: -1.4px;
+}
+
+.split .title {
+  font-size: 40px;
+  letter-spacing: -1.4px;
+}
+
+/* Colores del logo en version apagada, como en Nosotros. */
+.accent {
+  background: linear-gradient(
+    100deg,
+    #8a5cc4 0%,
+    #b3559f 30%,
+    #cc6a8f 55%,
+    #d4875f 80%,
+    #d9a468 100%
+  );
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  /* Safari recorta el degradado justo en el borde de la caja y, con el
+     espaciado negativo del titular, el ultimo caracter se queda a medio
+     pintar. Este relleno alarga la caja para que quepa entero. */
+  padding-inline-end: 0.09em;
+}
+
+.description {
+  margin: 14px 0 0;
+  color: rgb(221 221 224 / 62%);
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.wide .description {
+  max-width: 520px;
+  font-size: 16px;
+}
+
+.split .eyebrow {
+  font-size: 13px;
+}
+
+.split .description {
+  margin-top: 18px;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* La foto arranca un poco por debajo del texto y se funde arriba con la
+   tarjeta, como en la referencia. */
+.media {
+  position: relative;
+  flex: 1;
+  margin-top: 22px;
+}
+
+.media::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0 0 auto;
+  height: 120px;
+  background: linear-gradient(180deg, #020303 0%, rgb(2 3 3 / 0%) 100%);
+  content: "";
+  pointer-events: none;
+}
+
+.image,
+.video {
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.86) saturate(1);
+}
+
+.video {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* En la apaisada la foto va por encima del texto y el velo es mas alto. */
+.wide .media {
+  margin-top: 16px;
+}
+
+.wide .media::before {
+  height: 160px;
+}
+
+/* En la partida el video va en su formato vertical original (9:16, sin
+   recorte), a toda la altura y pegado a la derecha; el velo entra por su
+   borde izquierdo. */
+.split .media {
+  flex: 0 0 auto;
+  aspect-ratio: 9 / 16;
+  height: 100%;
+  margin-top: 0;
+}
+
+.split .media::before {
+  width: 70px;
+}
+
+.split .media::before {
+  inset: 0 auto 0 0;
+  width: 90px;
+  height: auto;
+  background: linear-gradient(90deg, #020303 0%, rgb(2 3 3 / 0%) 100%);
+}
+
+@media (max-width: 1000px) {
+  .tall {
+    height: 620px;
+  }
+
+  .wide {
+    height: 560px;
+  }
+
+  /* Sin ancho para dos columnas: texto arriba y video abajo. */
+  .split {
+    flex-direction: column;
+    height: 640px;
+  }
+
+  .split .text {
+    flex: none;
+    padding: 34px 32px 0;
+  }
+
+  .split .media {
+    flex: 1;
+    aspect-ratio: auto;
+    height: auto;
+    margin-top: 22px;
+  }
+
+  .split .media::before {
+    inset: 0 0 auto;
+    width: auto;
+    height: 120px;
+    background: linear-gradient(180deg, #020303 0%, rgb(2 3 3 / 0%) 100%);
+  }
+}
+
+@media (max-width: 600px) {
+  .tall {
+    height: 560px;
+  }
+
+  .wide {
+    height: 520px;
+  }
+
+  .text,
+  .wide .text {
+    padding: 28px 24px 0;
+  }
+
+  .title,
+  .wide .title,
+  .split .title {
+    font-size: 28px;
+    letter-spacing: -0.8px;
+  }
+}

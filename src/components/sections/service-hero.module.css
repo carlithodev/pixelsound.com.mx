@@ -1,0 +1,156 @@
+/* Poco mas de media pantalla; la barra fija va encima, en vidrio. */
+.hero {
+  position: relative;
+  isolation: isolate;
+  height: max(440px, 58svh);
+  overflow: hidden;
+  background: #020303;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+}
+
+/* Mismo velo de brillo que el resto de los medios del sitio. */
+.image {
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.86) saturate(1);
+}
+
+/* Tono oscuro parejo, mas cerrado bajo la barra y fundido al gris de la
+   pagina al pie. */
+.veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgb(0 0 0 / 55%) 0%,
+      rgb(0 0 0 / 10%) 30%,
+      rgb(0 0 0 / 10%) 62%,
+      var(--night) 100%
+    ),
+    rgb(0 0 0 / 38%);
+}
+
+/* Nombre de la seccion: misma letra que el titular del inicio. */
+.title {
+  position: relative;
+  margin: 0;
+  color: hsl(38 35% 86%);
+  font-family: var(--font-inter-tight), var(--font-sans);
+  font-size: clamp(34px, 4.6vw, 60px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -1.8px;
+  text-wrap: balance;
+  animation: service-title-enter 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ---- Centrada: el titulo va sobre la foto ---- */
+.center {
+  display: grid;
+  place-items: center;
+}
+
+.center .title {
+  padding: var(--header-height) 24px 0;
+  text-align: center;
+}
+
+/* ---- Partida: bloque negro a la izquierda, foto a la derecha ---- */
+.split {
+  display: grid;
+  grid-template-columns: 28% 1fr;
+  align-items: center;
+}
+
+.split .media {
+  inset: 0 0 0 28%;
+}
+
+/* Sobre la foto solo queda el velo de arriba y el fundido al gris; el corte
+   con el bloque negro se suaviza por la izquierda. */
+.split .veil {
+  background:
+    linear-gradient(
+      90deg,
+      #020303 0%,
+      rgb(2 3 3 / 0%) 14%,
+      rgb(2 3 3 / 0%) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgb(0 0 0 / 55%) 0%,
+      rgb(0 0 0 / 10%) 30%,
+      rgb(0 0 0 / 10%) 62%,
+      var(--night) 100%
+    ),
+    rgb(0 0 0 / 30%);
+}
+
+.split .title {
+  z-index: 1;
+  padding: var(--header-height) 24px 0 clamp(24px, 4.5vw, 64px);
+  font-size: clamp(30px, 3.4vw, 46px);
+  letter-spacing: -1.2px;
+}
+
+@keyframes service-title-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (max-width: 760px) {
+  .hero {
+    height: max(360px, 52svh);
+  }
+
+  .title {
+    letter-spacing: -1px;
+  }
+
+  /* Sin ancho para dos bloques: la foto vuelve a ocupar todo y el titulo se
+     centra encima. */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr;
+    place-items: center;
+  }
+
+  .split .media {
+    inset: 0;
+  }
+
+  .split .veil {
+    background:
+      linear-gradient(
+        180deg,
+        rgb(0 0 0 / 60%) 0%,
+        rgb(0 0 0 / 25%) 40%,
+        rgb(0 0 0 / 25%) 62%,
+        var(--night) 100%
+      ),
+      rgb(0 0 0 / 30%);
+  }
+
+  .split .title {
+    padding: var(--header-height) 24px 0;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title {
+    animation: none;
+  }
+}

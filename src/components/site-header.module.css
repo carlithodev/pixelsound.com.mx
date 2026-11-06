@@ -1,0 +1,247 @@
+/* Fija en todas las secciones, a todo el ancho. En el tope va transparente
+   sobre el video; al bajar se compacta y se vuelve vidrio oscuro. */
+.header {
+  position: fixed;
+  z-index: 20;
+  inset: 0 0 auto;
+}
+
+/* Degradado del tope: solo mientras la barra esta arriba del todo. */
+.header::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 auto;
+  height: calc(var(--header-height) + 100px);
+  background: linear-gradient(
+    180deg,
+    rgb(0 0 0 / 96%) 0%,
+    rgb(0 0 0 / 72%) 35%,
+    rgb(0 0 0 / 28%) 70%,
+    transparent 100%
+  );
+  content: "";
+  pointer-events: none;
+  transition: opacity 500ms ease;
+}
+
+.header[data-scrolled="true"]::before {
+  opacity: 0;
+}
+
+.bar {
+  position: relative;
+  z-index: 2;
+  height: var(--header-height);
+  border-bottom: 1px solid transparent;
+  transition:
+    height 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 420ms ease,
+    border-color 420ms ease,
+    box-shadow 520ms ease;
+}
+
+/* Vidrio oscuro: el desenfoque + la saturacion hacen que lo que pasa por
+   detras se vea como silueta de color, no como bloque. */
+.header[data-scrolled="true"] .bar {
+  height: 56px;
+  border-bottom-color: rgb(255 255 255 / 10%);
+  background: rgb(8 10 10 / 50%);
+  box-shadow: 0 10px 34px rgb(0 0 0 / 32%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  backdrop-filter: blur(14px) saturate(150%);
+}
+
+/* El panel del menu movil se dibuja en el cuerpo de la pagina, por debajo
+   de esta barra: asi el logo y el boton quedan encima para poder cerrarlo. */
+.inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(920px, 86.5%);
+  height: 100%;
+  margin-inline: auto;
+}
+
+.brand {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  color: #fff;
+  text-decoration: none;
+  transition: width 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.header[data-scrolled="true"] .brand {
+  width: 72px;
+}
+
+.logo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 42px;
+  margin-inline-end: -54px;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.1px;
+  transition:
+    gap 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    font-size 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.header[data-scrolled="true"] .navigation {
+  gap: 30px;
+  font-size: 14.5px;
+}
+
+.navigation a,
+.navigation button {
+  position: relative;
+  padding: 6px 0;
+  border: 0;
+  background: none;
+  color: #97979e;
+  font: inherit;
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+/* Sobre el vidrio el texto sube un paso de luz para no perderse. */
+.header[data-scrolled="true"] .navigation a,
+.header[data-scrolled="true"] .navigation button {
+  color: #c9c9cf;
+}
+
+.navigation a::after,
+.navigation button::after {
+  position: absolute;
+  right: 21%;
+  bottom: 1px;
+  left: 21%;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: right center;
+  background: linear-gradient(90deg, #fa17c1, #ff9b21);
+  content: "";
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.navigation a:hover,
+.navigation button:not(:disabled):hover {
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.navigation a:hover::after,
+.navigation button:not(:disabled):hover::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.navigation button:disabled {
+  opacity: 0.55;
+}
+
+/* Pantallas chicas: fuera la barra de enlaces, entra la hamburguesa (el
+   boton lo pinta MobileNav). El logo se achica para dejarle aire. */
+@media (max-width: 900px) {
+  .inner {
+    width: calc(100% - 32px);
+  }
+
+  .navigation {
+    display: none;
+  }
+
+  .brand,
+  .header[data-scrolled="true"] .brand {
+    width: 78px;
+  }
+}
+
+/* Sin backdrop-filter (navegadores viejos), el vidrio se vuelve mas solido. */
+@supports not (backdrop-filter: blur(1px)) {
+  .header[data-scrolled="true"] .bar {
+    background: rgb(8 10 10 / 90%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header::before,
+  .bar,
+  .brand,
+  .navigation,
+  .navigation a,
+  .navigation button,
+  .navigation a::after,
+  .navigation button::after {
+    transition: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .inner {
+    width: calc(100% - 40px);
+  }
+
+  .header[data-scrolled="true"] .bar {
+    height: 52px;
+  }
+
+  .navigation {
+    gap: 28px;
+    margin-inline-end: -16px;
+    font-size: 16px;
+  }
+
+  .header[data-scrolled="true"] .navigation {
+    gap: 22px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .brand {
+    width: 85px;
+  }
+
+  .header[data-scrolled="true"] .brand {
+    width: 64px;
+  }
+
+  .navigation {
+    gap: clamp(12px, 3.4vw, 20px);
+    font-size: 14px;
+    letter-spacing: 0;
+  }
+
+  .header[data-scrolled="true"] .navigation {
+    gap: clamp(12px, 3.4vw, 18px);
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 359px) {
+  .inner {
+    width: calc(100% - 28px);
+  }
+
+  .navigation {
+    gap: 10px;
+    font-size: 12px;
+  }
+}

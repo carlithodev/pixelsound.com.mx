@@ -1,0 +1,51 @@
+/* Capa decorativa detras de Servicios. No recibe cursor y se recorta al
+   lienzo. El aislamiento (contain) es lo que evita que el movimiento de los
+   cuadritos obligue a repintar el fondo entero: medido, baja de 28 a 21 ms
+   por cuadro en un equipo lento. */
+.field {
+  contain: strict;
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Cada cuadrito viaja de ida y vuelta. Solo se anima transform: el navegador
+   lo resuelve en la capa de composicion, sin repintar nada. */
+.pixel {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 3px;
+  background: var(--color);
+  animation: pixel-drift var(--dur) ease-in-out var(--delay) infinite;
+}
+
+@keyframes pixel-drift {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  33% {
+    transform: translate3d(var(--dx), var(--dy), 0) rotate(var(--rot));
+  }
+
+  66% {
+    transform: translate3d(var(--dx2), var(--dy2), 0)
+      rotate(calc(var(--rot) * -1));
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+/* Sin movimiento: los cuadritos se quedan quietos donde nacieron. */
+@media (prefers-reduced-motion: reduce) {
+  .pixel {
+    animation: none;
+  }
+}

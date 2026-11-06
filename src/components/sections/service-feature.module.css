@@ -1,0 +1,223 @@
+/* Dos columnas: el medio se lleva la parte mayor y el texto acompana. El
+   reparto se escribe por lado porque el medio cambia de columna segun donde
+   va: con side="left" ocupa la primera, con side="right" la segunda. */
+.feature {
+  display: grid;
+  gap: 56px;
+  align-items: center;
+}
+
+.left {
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);
+}
+
+.right {
+  grid-template-columns: minmax(280px, 1fr) minmax(0, 1.6fr);
+}
+
+/* Sin esto, una pieza ancha empuja su columna y la pagina se desborda. */
+.feature > * {
+  min-width: 0;
+}
+
+/* Con dos piezas el medio necesita mas sitio, porque son dos verticales una
+   al lado de la otra. */
+.several.left {
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+}
+
+.several.right {
+  grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
+}
+
+/* Las piezas van juntas, del mismo alto. */
+.frames {
+  display: flex;
+  min-width: 0;
+  gap: 16px;
+  justify-content: center;
+}
+
+.media {
+  position: relative;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 26px;
+  background: #020303;
+}
+
+/* Todo se mide por el ancho de su columna, nunca por un alto fijo: asi una
+   pieza no puede desbordar y empujarse encima del texto. El alto solicitado
+   se respeta como tope, convertido a su ancho equivalente. */
+.vertical {
+  width: 100%;
+  max-width: calc(var(--alto) * 9 / 16);
+  height: auto;
+}
+
+.apaisada {
+  width: 100%;
+  height: auto;
+}
+
+/* Dos piezas se reparten la columna a partes iguales. */
+.several .media {
+  flex: 1 1 0;
+}
+
+/* Con el medio a la derecha se invierte el orden sin tocar el HTML. */
+.right .frames {
+  order: 2;
+}
+
+/* Recorte sin fondo: nada de caja, la pieza flota sobre la pagina. */
+.bare {
+  border-radius: 0;
+  background: none;
+}
+
+.image,
+.video {
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.92) saturate(1);
+}
+
+.bare .image {
+  object-fit: contain;
+}
+
+.video {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.text {
+  max-width: 560px;
+}
+
+.eyebrow {
+  margin: 0 0 16px;
+  color: rgb(221 221 224 / 55%);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: hsl(38 35% 86%);
+  font-family: var(--font-inter-tight), var(--font-sans);
+  font-size: clamp(32px, 3.2vw, 46px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -1.6px;
+  text-wrap: balance;
+}
+
+/* Colores del logo en version apagada, como en el resto del sitio. */
+.accent {
+  background: linear-gradient(
+    100deg,
+    #8a5cc4 0%,
+    #b3559f 30%,
+    #cc6a8f 55%,
+    #d4875f 80%,
+    #d9a468 100%
+  );
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  /* Safari recorta el degradado justo en el borde de la caja y, con el
+     espaciado negativo del titular, el ultimo caracter se queda a medio
+     pintar. Este relleno alarga la caja para que quepa entero. */
+  padding-inline-end: 0.09em;
+}
+
+.paragraph {
+  margin: 22px 0 0;
+  color: rgb(221 221 224 / 66%);
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* Escritorio angosto y tabletas: el medio cede algo para que el texto no se
+   quede en una tira de tres palabras por renglon. */
+@media (max-width: 1180px) {
+  .feature {
+    gap: 40px;
+  }
+
+  .left {
+    grid-template-columns: minmax(0, 1.25fr) minmax(260px, 1fr);
+  }
+
+  .right {
+    grid-template-columns: minmax(260px, 1fr) minmax(0, 1.25fr);
+  }
+
+  /* Dos verticales juntas ceden menos: repartidas a la mitad se quedarian en
+     poco mas de 200px cada una. */
+  .several.left {
+    grid-template-columns: minmax(0, 1.9fr) minmax(240px, 1fr);
+  }
+
+  .several.right {
+    grid-template-columns: minmax(240px, 1fr) minmax(0, 1.9fr);
+  }
+}
+
+@media (max-width: 860px) {
+  /* .several.left y .several.right pesan mas que una clase suelta: si no se
+     nombran aqui, esos bloques se quedan en dos columnas y el texto sale en
+     una tira de tres palabras. */
+  .feature,
+  .several,
+  .several.left,
+  .several.right {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .right .frames {
+    order: 0;
+  }
+
+  /* En una sola columna las piezas se miden por el ancho disponible y el
+     tope de alto ya no aplica: manda el ancho de la pantalla. */
+  .vertical,
+  .apaisada {
+    height: auto;
+    width: 100%;
+    max-width: none;
+  }
+
+  .several .frames > * {
+    flex: 1 1 0;
+  }
+
+  .text {
+    max-width: none;
+  }
+}
+
+/* Telefono angosto: dos verticales lado a lado se quedan en miniaturas de
+   170px. Apiladas ocupan el ancho entero y se ven de verdad. */
+@media (max-width: 620px) {
+  .several .frames {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* En columna, el eje principal es el vertical: un "flex: 1 1 0" dejaria
+     las piezas con cero de alto. Aqui manda la proporcion. */
+  .several .frames > *,
+  .several .media {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}

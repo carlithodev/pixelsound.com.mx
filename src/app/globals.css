@@ -1,0 +1,108 @@
+@import "tailwindcss" source("../");
+
+@theme {
+  --font-sans: Arial, Helvetica, sans-serif;
+}
+
+:root {
+  --header-height: 70px;
+  color-scheme: dark;
+  /* Deja animar alturas que terminan en auto (el desplegado de las
+     preguntas). Donde no se soporta, el cambio es instantaneo. */
+  interpolate-size: allow-keywords;
+
+  /* Los cinco tonos del logo, en canales sueltos para poder diluirlos. */
+  --violeta: 138 92 196;
+  --magenta: 179 85 159;
+  --coral: 204 106 143;
+  --ambar: 212 135 95;
+  --oro: 217 164 104;
+
+  /* Fondo de los modulos de servicio: negro con resplandor morado. Los
+     destellos se repiten en franjas altas para que la pagina larga no se
+     quede plana. */
+  --night: #07070a;
+  --night-bg:
+    radial-gradient(
+        58% 40% at 86% 12%,
+        rgb(var(--violeta) / 20%),
+        transparent 62%
+      )
+      0 0 / 100% 1700px repeat,
+    radial-gradient(
+        54% 38% at 8% 58%,
+        rgb(var(--magenta) / 13%),
+        transparent 62%
+      )
+      0 260px / 100% 2300px repeat,
+    var(--night);
+}
+
+html {
+  scroll-behavior: smooth;
+  /* La barra es fija: al saltar a un ancla, el titulo no queda debajo. */
+  scroll-padding-top: calc(var(--header-height) + 24px);
+}
+
+body {
+  margin: 0;
+  background: #020303;
+  color: #f7f7f8;
+  font-family: var(--font-manrope), var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #f123be;
+  outline-offset: 7px;
+}
+
+/* Solo para lectores de pantalla: fuera de la vista, dentro del arbol. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 10;
+  top: 12px;
+  left: 12px;
+  padding: 12px 18px;
+  transform: translateY(-150%);
+  background: #fff;
+  color: #111;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+::selection {
+  background: #c200bf;
+  color: #ffffff;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --header-height: 60px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

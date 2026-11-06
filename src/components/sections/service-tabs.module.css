@@ -1,0 +1,116 @@
+.wrap {
+  display: flex;
+  justify-content: center;
+  padding: 28px 16px 0;
+}
+
+/* Pildora negra sobre el gris de la pagina, con hilo de borde. Entra un
+   instante despues del titulo, subiendo y abriendose. */
+.pill {
+  position: relative;
+  display: flex;
+  gap: 4px;
+  max-width: 100%;
+  padding: 6px;
+  overflow-x: auto;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 999px;
+  background: #050607;
+  scrollbar-width: none;
+  animation: service-tabs-enter 720ms cubic-bezier(0.22, 1, 0.36, 1) 220ms both;
+}
+
+.pill::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes service-tabs-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Burbuja del activo: un solo elemento que se desliza y cambia de ancho
+   hasta el boton elegido. Se posiciona desde el componente. */
+.bubble {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 0;
+  width: 0;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 8%);
+  pointer-events: none;
+}
+
+.bubble[data-ready="true"] {
+  transition:
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tab {
+  position: relative;
+  flex: none;
+  padding: 11px 24px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: #97979e;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.1px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 260ms ease;
+}
+
+.tab:hover {
+  color: #dddde0;
+}
+
+.tab[aria-selected="true"] {
+  color: #f7f7f8;
+}
+
+@media (max-width: 760px) {
+  .wrap {
+    padding-top: 22px;
+  }
+
+  /* La pildora no cabe entera: se arrastra con el dedo y el borde derecho
+     se desvanece para que se note que hay mas. */
+  .pill {
+    max-width: 100%;
+    mask-image: linear-gradient(90deg, #000 88%, transparent 100%);
+    scroll-snap-type: x proximity;
+  }
+
+  .tab {
+    scroll-snap-align: center;
+  }
+
+  .tab {
+    padding: 10px 18px;
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill {
+    animation: none;
+  }
+
+  .bubble[data-ready="true"],
+  .tab {
+    transition: none;
+  }
+}

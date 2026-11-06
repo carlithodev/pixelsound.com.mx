@@ -1,0 +1,167 @@
+/* Gris muy oscuro, un paso por encima del negro del lienzo que sigue. La
+   franja mide lo de siempre, pero la seccion es mas alta: ese sobrante es el
+   recorrido durante el cual la franja se queda clavada a media pantalla y la
+   escena termina antes de soltar el scroll. Los valores por defecto son el
+   estado final, que es lo que se ve sin JavaScript. */
+.intro {
+  --banda: clamp(520px, 80svh, 860px);
+  --logo-scale: 1;
+  --logo-y: 0px;
+  --text-p: 1;
+
+  position: relative;
+  height: calc(100svh + 1000px);
+  background: #0d0d10;
+}
+
+/* Mientras la escena corre, la franja ocupa la pantalla completa: si midiera
+   menos, quedaria una tira de gris debajo de la foto hasta que el scroll se
+   suelte. */
+.stage {
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 48%) minmax(0, 1fr);
+  align-items: stretch;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Recorta por los lados para llenar el alto sin deformarse. */
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* La foto se asienta al entrar: llega un punto mas grande y aterriza. */
+.media[data-reveal] .image {
+  transition:
+    opacity 900ms ease,
+    transform 1400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.media[data-reveal="pending"] .image {
+  opacity: 0;
+  transform: scale(1.08);
+}
+
+.block {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  padding: clamp(32px, 5vw, 72px) clamp(28px, 6vw, 96px);
+}
+
+/* La caja es la del estado final; la escala lo lleva hasta llenar el campo
+   gris y de vuelta. Crece desde la izquierda para no pisar el borde. */
+.logo {
+  width: clamp(120px, 10.5vw, 152px);
+  height: auto;
+  transform: translateY(var(--logo-y)) scale(var(--logo-scale));
+  transform-origin: left center;
+}
+
+/* El texto entra desenfocado y se define conforme el logo se encoge. */
+.text {
+  opacity: var(--text-p);
+  transform: translateY(calc((1 - var(--text-p)) * 30px));
+  filter: blur(calc((1 - var(--text-p)) * 7px));
+  will-change: opacity, transform;
+}
+
+.title {
+  margin: 30px 0 0;
+  color: hsl(38 35% 86%);
+  font-family: var(--font-inter-tight), var(--font-sans);
+  font-size: clamp(28px, 3.1vw, 44px);
+  font-weight: 650;
+  line-height: 1.1;
+  letter-spacing: -1.3px;
+  text-wrap: balance;
+}
+
+/* Mismo degradado apagado del logo que llevan Eventos y Nosotros. */
+.accent {
+  background: linear-gradient(
+    100deg,
+    #8a5cc4 0%,
+    #b3559f 30%,
+    #cc6a8f 55%,
+    #d4875f 80%,
+    #d9a468 100%
+  );
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  /* Safari recorta el degradado justo en el borde de la caja y, con el
+     espaciado negativo del titular, el ultimo caracter se queda a medio
+     pintar. Este relleno alarga la caja para que quepa entero. */
+  padding-inline-end: 0.09em;
+}
+
+.description {
+  max-width: 46ch;
+  margin: 20px 0 0;
+  color: #dddde0;
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.6;
+  letter-spacing: -0.2px;
+}
+
+/* En movil no hay escena fija: la franja vuelve a ser una seccion normal. */
+@media (max-width: 860px) {
+  .intro {
+    height: auto;
+  }
+
+  .stage {
+    position: static;
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .media {
+    aspect-ratio: 1086 / 1448;
+    height: auto;
+  }
+
+  .block {
+    padding: 34px 16px 48px;
+  }
+
+  .logo {
+    width: 150px;
+    transform: none;
+  }
+
+  .title {
+    letter-spacing: -1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro {
+    height: auto;
+  }
+
+  .stage {
+    position: static;
+    height: var(--banda);
+  }
+
+  .media[data-reveal] .image {
+    transition: none;
+  }
+}

@@ -1,0 +1,74 @@
+.info {
+  max-width: 640px;
+  container-type: inline-size;
+}
+
+.eyebrow {
+  margin: 0;
+  color: rgb(221 221 224 / 55%);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: hsl(38 35% 86%);
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.6px;
+  text-wrap: balance;
+}
+
+.eyebrow + .title {
+  margin-top: 14px;
+}
+
+.paragraph {
+  margin: 16px 0 0;
+  color: rgb(221 221 224 / 68%);
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* Puntos con hilo entre cada uno: termino a la izquierda, detalle a la
+   derecha, como la lista de redes en Nosotros. */
+.items {
+  margin: 30px 0 0;
+  border-top: 1px solid rgb(255 255 255 / 10%);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 20px;
+  padding: 15px 4px;
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
+}
+
+.term {
+  color: #f7f7f8;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.detail {
+  margin: 0;
+  color: rgb(221 221 224 / 62%);
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* En columnas angostas (modelo de luces, movil) termino y detalle se
+   apilan. */
+@container (max-width: 440px) {
+  .item {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}

@@ -1,0 +1,210 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  min-height: max(calc(620px + var(--header-height)), 100svh);
+  overflow: hidden;
+  background: #020303;
+}
+
+/* Todo centrado, sobre el video con velo. */
+.content {
+  width: min(900px, 86.5%);
+  padding-block: calc(var(--header-height) + 48px) 72px;
+  text-align: center;
+  animation: hero-content-enter 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes hero-content-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Titular en Inter Tight, en minusculas y con tracking cerrado: el gesto
+   tipografico de Apple. */
+.title {
+  margin: 0;
+  font-family: var(--font-inter-tight), var(--font-sans);
+}
+
+/* Primera linea en blanco puro; sobre video hace falta el maximo contraste
+   y una sombra suave para que aguante los cuadros claros. */
+.titleIntro {
+  display: block;
+  color: #fff;
+  font-size: clamp(23px, 6.6vw, 52px);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.8px;
+  text-shadow:
+    0 1px 3px rgb(0 0 0 / 45%),
+    0 2px 22px rgb(0 0 0 / 55%);
+}
+
+/* Segunda linea con el degradado del logo, en su version clara: sobre el
+   video los tonos apagados se perdian. La sombra va como filtro porque el
+   texto esta relleno con el degradado. */
+.titleAccent {
+  display: block;
+  margin-top: -6px;
+  background: linear-gradient(
+    100deg,
+    #ab86e0 0%,
+    #d982c6 30%,
+    #ef92ad 55%,
+    #f0a878 80%,
+    #f0c58e 100%
+  );
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  /* Safari recorta el degradado justo en el borde de la caja y, con el
+     espaciado negativo del titular, el ultimo caracter se queda a medio
+     pintar. Este relleno alarga la caja para que quepa entero. */
+  padding-inline-end: 0.09em;
+  filter: drop-shadow(0 2px 4px rgb(0 0 0 / 45%))
+    drop-shadow(0 4px 24px rgb(0 0 0 / 55%));
+  font-size: clamp(36px, 10.6vw, 116px);
+  font-weight: 650;
+  line-height: 1;
+  letter-spacing: clamp(-3.6px, -0.9vw, -1.4px);
+}
+
+.description {
+  max-width: 640px;
+  margin: 26px auto 0;
+  color: #dddde0;
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: clamp(18px, 1.5vw, 24px);
+  line-height: 1.45;
+  letter-spacing: -0.3px;
+  text-wrap: balance;
+}
+
+/* Dos pildoras: la principal llena de champan, la secundaria de trazo. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 38px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+  padding: 11px 22px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background-color 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease,
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+/* Mismo degradado apagado del logo que lleva la frase de Nosotros. */
+.primary {
+  /* Sin borde: con el degradado, el filo transparente asomaba en la curva. */
+  border: 0;
+  padding: 12px 23px;
+  background: linear-gradient(
+    100deg,
+    #8a5cc4 0%,
+    #b3559f 30%,
+    #cc6a8f 55%,
+    #d4875f 80%,
+    #d9a468 100%
+  );
+  color: #fbfaf7;
+  transition:
+    filter 220ms ease,
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.primary:hover {
+  filter: brightness(1.1);
+}
+
+.secondary {
+  border-color: rgb(255 255 255 / 42%);
+  color: #f0eee9;
+}
+
+.secondary:hover {
+  border-color: rgb(255 255 255 / 80%);
+  background: rgb(255 255 255 / 8%);
+}
+
+@media (max-width: 760px) {
+  .hero {
+    min-height: max(calc(660px + var(--header-height)), 100svh);
+  }
+
+  .content {
+    width: calc(100% - 48px);
+    padding-block: calc(var(--header-height) + 40px) 64px;
+  }
+
+  .titleIntro {
+    font-size: clamp(24px, 7vw, 34px);
+    letter-spacing: -0.4px;
+  }
+
+  .titleAccent {
+    margin-top: -3px;
+    font-size: clamp(50px, 14.5vw, 70px);
+    letter-spacing: -2.2px;
+  }
+
+  .description {
+    margin-top: 22px;
+    font-size: 19px;
+    line-height: 1.5;
+    letter-spacing: -0.4px;
+  }
+
+  .actions {
+    gap: 10px;
+    margin-top: 30px;
+  }
+
+  .button {
+    min-width: 0;
+    padding: 11px 20px;
+    font-size: 12px;
+  }
+
+  .primary {
+    padding: 12px 21px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content {
+    animation: none;
+  }
+
+  .button {
+    transition: none;
+  }
+}

@@ -1,0 +1,351 @@
+/* Sin fondo propio: lo pone el lienzo oscuro con los cuadritos flotando.
+   Fuera de pantalla el navegador se ahorra pintar la seccion, y de paso las
+   tres pistas dejan de correr. El alto declarado evita saltos. */
+.services {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 2650px;
+  position: relative;
+  z-index: 1;
+  padding: 120px 0 128px;
+  overflow: hidden;
+}
+
+.block {
+  width: 100%;
+}
+
+.heading {
+  width: min(1200px, 88%);
+  margin: 0 auto 56px;
+  color: hsl(38 35% 86%);
+  font-family: var(--font-inter-tight), var(--font-sans);
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 650;
+  letter-spacing: -1.4px;
+  text-align: center;
+}
+
+/* Mismo degradado apagado del logo que llevan Eventos y Nosotros. */
+.accent {
+  background: linear-gradient(
+    100deg,
+    #8a5cc4 0%,
+    #b3559f 30%,
+    #cc6a8f 55%,
+    #d4875f 80%,
+    #d9a468 100%
+  );
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  /* Safari recorta el degradado justo en el borde de la caja y, con el
+     espaciado negativo del titular, el ultimo caracter se queda a medio
+     pintar. Este relleno alarga la caja para que quepa entero. */
+  padding-inline-end: 0.09em;
+}
+
+/* Cada grupo se pinta solo cuando esta cerca de la pantalla: asi corre una
+   pista a la vez y no las tres a la vez. */
+.grupo {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 700px;
+  margin-bottom: 92px;
+}
+
+.grupo:last-child {
+  margin-bottom: 0;
+}
+
+.encabezado {
+  width: min(1200px, 88%);
+  margin: 0 auto 26px;
+}
+
+.titulo {
+  margin: 0;
+  color: hsl(38 35% 86%);
+  font-family: var(--font-inter-tight), var(--font-sans);
+  font-size: clamp(22px, 2.1vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.8px;
+}
+
+.descripcion {
+  max-width: 62ch;
+  margin: 10px 0 0;
+  color: #dddde0;
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.6;
+  letter-spacing: -0.2px;
+}
+
+/* Marco del carrusel: la pista se desvanece en los extremos, y las flechas
+   van fuera de ella porque la mascara tambien las borraria. */
+.carrusel {
+  position: relative;
+}
+
+/* La pista va de borde a borde y se desvanece en los dos extremos. */
+.pista {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 6%,
+    #000 94%,
+    transparent 100%
+  );
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: servicios-scroll linear infinite;
+  /* El dedo manda: lo vertical lo sigue resolviendo el navegador (bajar la
+     pagina) y lo horizontal llega a ServiceTrack para mover la pista. */
+  touch-action: pan-y;
+}
+
+/* Flecha discreta: vidrio oscuro sobre el desvanecido del borde. Se ve
+   siempre, para que no haya que adivinar que el carrusel se puede adelantar,
+   y se aviva al acercar el cursor. */
+.flecha {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 50%;
+  background: rgb(9 9 12 / 52%);
+  color: rgb(228 228 231 / 72%);
+  cursor: pointer;
+  transform: translateY(-50%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(10px) saturate(140%);
+  transition:
+    border-color 220ms ease,
+    background-color 220ms ease,
+    color 220ms ease,
+    opacity 220ms ease;
+}
+
+.flecha:hover {
+  border-color: rgb(255 255 255 / 26%);
+  background: rgb(14 14 18 / 78%);
+  color: #f4f4f5;
+}
+
+.flecha:focus-visible {
+  outline: 2px solid rgb(221 221 224 / 70%);
+  outline-offset: 3px;
+}
+
+.flechaIzquierda {
+  left: 14px;
+}
+
+.flechaDerecha {
+  right: 14px;
+}
+
+.flechaDerecha svg {
+  transform: rotate(180deg);
+}
+
+/* Al pasar el cursor la pista baja a paso lento; de eso se encarga
+   ServiceTrack con la velocidad de la animacion, no con una pausa. */
+
+.fila {
+  display: flex;
+  gap: 18px;
+  margin: 0;
+  padding: 0 9px;
+  list-style: none;
+}
+
+.celda {
+  display: flex;
+}
+
+/* Tarjeta vertical, como el boceto. El acercamiento vive aqui para que la
+   sombra y la foto crezcan juntas. */
+.card {
+  position: relative;
+  display: block;
+  flex: none;
+  width: clamp(230px, 20vw, 310px);
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 22px;
+  background: #0f0f12;
+  text-decoration: none;
+  transition:
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 420ms ease,
+    box-shadow 520ms ease;
+  /* Capa propia: bordes limpios en el redondeo. */
+  isolation: isolate;
+}
+
+.card:hover,
+.card:focus-visible {
+  transform: scale(1.02);
+  border-color: rgb(255 255 255 / 18%);
+  box-shadow: 0 26px 60px rgb(0 0 0 / 55%);
+}
+
+.foto {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card:hover .foto,
+.card:focus-visible .foto {
+  transform: scale(1.045);
+}
+
+/* Degradado bajo el nombre, como en las tarjetas de Eventos. */
+.velo {
+  position: absolute;
+  inset: auto 0 0;
+  height: 46%;
+  background: linear-gradient(
+    0deg,
+    rgb(8 8 10 / 88%) 0%,
+    rgb(8 8 10 / 52%) 38%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.etiqueta {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 0 18px 18px;
+  color: #f7f7f8;
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+/* Boton: pildora de trazo champan, como el resto del sitio. */
+.mas {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+  margin: 26px 0 0;
+  margin-inline-start: max(6%, calc((100% - 1200px) / 2));
+  padding: 12px 22px 12px 24px;
+  border: 1px solid rgb(229 209 162 / 45%);
+  border-radius: 999px;
+  color: #e5d1a2;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+.mas svg {
+  flex: none;
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mas:hover {
+  border-color: rgb(229 209 162 / 75%);
+  background: rgb(229 209 162 / 10%);
+}
+
+.mas:hover svg {
+  transform: translateX(4px);
+}
+
+@keyframes servicios-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Aparicion al hacer scroll. */
+.block[data-reveal] {
+  transition:
+    opacity 1000ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1000ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.block[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(48px);
+}
+
+@media (max-width: 760px) {
+  .services {
+    padding: 72px 0 88px;
+  }
+
+  .heading {
+    width: calc(100% - 32px);
+    margin-bottom: 40px;
+  }
+
+  .encabezado {
+    width: calc(100% - 32px);
+  }
+
+  .grupo {
+    margin-bottom: 64px;
+  }
+
+  .fila {
+    gap: 12px;
+    padding: 0 6px;
+  }
+
+  .mas {
+    margin-inline-start: 16px;
+  }
+
+  /* En telefono no hay flechas: la pista se recorre con el dedo. */
+  .flecha {
+    display: none;
+  }
+}
+
+/* Sin movimiento: la pista se queda quieta y se recorre con el dedo. */
+@media (prefers-reduced-motion: reduce) {
+  .pista {
+    overflow-x: auto;
+  }
+
+  .track {
+    width: auto;
+    animation: none;
+  }
+
+  .fila[aria-hidden="true"] {
+    display: none;
+  }
+
+  .card,
+  .foto,
+  .mas,
+  .mas svg,
+  .block[data-reveal] {
+    transition: none;
+  }
+}

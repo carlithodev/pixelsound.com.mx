@@ -1,0 +1,154 @@
+/* Ultima seccion antes del pie, sobre el mismo gris muy oscuro. */
+.clients {
+  /* El navegador se ahorra pintar esta seccion mientras esta fuera de
+     pantalla; el alto declarado evita saltos de la barra de scroll. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 590px;
+  padding: 110px 0 120px;
+  background: #0d0d10;
+}
+
+.inner {
+  width: min(1200px, 88%);
+  margin-inline: auto;
+}
+
+/* Aparicion al hacer scroll, via Reveal. */
+.inner[data-reveal] {
+  transition:
+    opacity 1000ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1000ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.inner[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(32px);
+}
+
+/* Titulo pequeno, mismo trato que las etiquetas del sitio. */
+.title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 0 40px;
+  color: #e4e4e7;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.title::after {
+  flex: 1;
+  height: 1px;
+  background: rgb(255 255 255 / 14%);
+  content: "";
+}
+
+/* La pista se desvanece en ambos extremos. */
+.marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 10%,
+    #000 90%,
+    transparent 100%
+  );
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: clients-scroll 36s linear infinite;
+}
+
+.marquee:hover .track {
+  animation-play-state: paused;
+}
+
+.row {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* La separacion va como padding de cada logo y no como gap: asi las dos
+   filas miden exactamente lo mismo y el -50% empalma sin salto. */
+.item {
+  display: flex;
+  align-items: center;
+  padding-inline: clamp(28px, 3.5vw, 56px);
+}
+
+/* Logos a color con un velo ligero: menos brillo y un toque menos de
+   saturacion para que no compitan con el gris. Al pasar el cursor, plenos. */
+.logo {
+  width: auto;
+  height: 68px;
+  opacity: 0.85;
+  filter: brightness(0.7) saturate(0.85);
+  transition:
+    opacity 260ms ease,
+    filter 260ms ease;
+}
+
+.item:hover .logo {
+  opacity: 1;
+  filter: none;
+}
+
+@keyframes clients-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 760px) {
+  .clients {
+    padding: 64px 0 72px;
+  }
+
+  .inner {
+    width: calc(100% - 32px);
+  }
+
+  .title {
+    margin-bottom: 30px;
+  }
+
+  .logo {
+    height: 50px;
+  }
+
+  .track {
+    animation-duration: 26s;
+  }
+}
+
+/* Sin movimiento: una sola fila, quieta y centrada. */
+@media (prefers-reduced-motion: reduce) {
+  .inner[data-reveal] {
+    transition: none;
+  }
+
+  .track {
+    width: auto;
+    animation: none;
+  }
+
+  .row {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 28px;
+  }
+
+  .row[aria-hidden="true"] {
+    display: none;
+  }
+
+  .logo {
+    transition: none;
+  }
+}

@@ -1,0 +1,35 @@
+/* Fondo continuo para que los bloques no formen franjas. */
+.body {
+  background: var(--night);
+}
+
+/* Cada apartado: bloques apilados con aire, dentro de la columna del
+   sitio. */
+.section {
+  display: grid;
+  gap: 120px;
+  width: min(1200px, 88%);
+  margin: 56px auto 0;
+}
+
+/* El cierre se acerca al bloque que lo precede. */
+.section > section:last-child {
+  margin-top: -56px;
+}
+
+/* Reserva de alto para los apartados que aun no tienen bloques. */
+.workspace {
+  min-height: 50svh;
+}
+
+.tail {
+  height: 96px;
+}
+
+@media (max-width: 760px) {
+  .section {
+    width: calc(100% - 32px);
+    gap: 72px;
+    margin-top: 36px;
+  }
+}

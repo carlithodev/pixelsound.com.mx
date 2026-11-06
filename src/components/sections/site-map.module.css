@@ -1,0 +1,91 @@
+.lienzo {
+  width: 100%;
+  height: 100%;
+  background: #0a0a0d;
+}
+
+/* Las teselas de OpenStreetMap vienen en claro: se invierten y se gira el
+   tono para dejarlas oscuras. El filtro va solo en la capa del mapa, asi la
+   chincheta y los botones conservan su color. */
+.lienzo :global(.leaflet-tile-pane) {
+  filter: invert(0.93) hue-rotate(185deg) saturate(0.6) brightness(0.96)
+    contrast(0.9);
+}
+
+/* Leaflet exige una clase para el icono; la nuestra no pinta nada, todo el
+   aspecto vive en .pin. */
+.iconoVacio {
+  border: 0;
+  background: none;
+  /* Leaflet le pone cursor propio a los iconos: se lo quitamos para que no
+     tape los botones del zoom ni corte el arrastre. */
+  pointer-events: none;
+}
+
+/* Mismo disco con punta que traia la chincheta de antes. */
+.pin {
+  position: relative;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 50%;
+  background: rgb(10 10 13 / 92%);
+  box-shadow: 0 14px 30px rgb(0 0 0 / 55%);
+}
+
+/* Leaflet fuerza width:auto a las imagenes de sus capas con mas peso que
+   una clase suelta; por eso el logo se mide desde el panel de marcas. */
+.lienzo :global(.leaflet-marker-pane) img {
+  width: 38px;
+  height: auto;
+}
+
+.pin::after {
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  transform: translateX(-50%) rotate(45deg);
+  border-right: 1px solid rgb(255 255 255 / 18%);
+  border-bottom: 1px solid rgb(255 255 255 / 18%);
+  background: rgb(10 10 13 / 92%);
+  content: "";
+}
+
+/* Controles y creditos, al tono del sitio. */
+.lienzo :global(.leaflet-control-zoom) {
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgb(0 0 0 / 45%);
+}
+
+.lienzo :global(.leaflet-control-zoom a) {
+  border: 0;
+  background: rgb(14 14 17 / 92%);
+  color: #e4e4e7;
+  font-weight: 500;
+  transition: background-color 180ms ease;
+}
+
+.lienzo :global(.leaflet-control-zoom a:hover) {
+  background: rgb(26 26 31 / 95%);
+  color: #fff;
+}
+
+.lienzo :global(.leaflet-control-attribution) {
+  padding: 2px 8px;
+  border-radius: 8px 0 0;
+  background: rgb(8 8 10 / 72%);
+  color: rgb(221 221 224 / 60%);
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: 10px;
+}
+
+.lienzo :global(.leaflet-control-attribution a) {
+  color: rgb(221 221 224 / 78%);
+}

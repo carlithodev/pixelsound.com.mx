@@ -1,0 +1,112 @@
+/* Fondo continuo para que los bloques no formen franjas. */
+.body {
+  background: var(--night);
+}
+
+/* Tarjeta de entrada de Pantallas: centrada, con aire arriba (bajo la
+   pildora) y abajo, para que los modelos aparezcan al seguir bajando. */
+.intro {
+  width: min(1200px, 88%);
+  margin: 56px auto 0;
+}
+
+/* Iluminacion: tarjeta a 32px del borde de la ventana y el modelo a su
+   derecha, centrado en lo que sobra. */
+.lighting {
+  display: grid;
+  grid-template-columns: min(850px, 100%) minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+  width: calc(100% - 64px);
+  margin: 56px 32px 0;
+}
+
+/* Modelo arriba y, mas abajo, una explicacion corta. */
+.lightingModel {
+  display: grid;
+  gap: 88px;
+  width: min(460px, 100%);
+  justify-self: center;
+}
+
+/* Misma columna que el resto del sitio; tres visores por fila, del mismo
+   tamano, desde el borde izquierdo. */
+.stage {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 80px 56px;
+  width: min(1200px, 88%);
+  margin: 48px auto 0;
+}
+
+.intro + .stage {
+  margin-top: 96px;
+}
+
+/* Audio: tarjeta fija a la izquierda y modelos en dos columnas a la
+   derecha, dentro de la misma columna del sitio. */
+.audio {
+  display: grid;
+  grid-template-columns: 420px minmax(0, 1fr);
+  gap: 140px;
+  align-items: start;
+  width: min(1200px, 88%);
+  margin: 48px auto 0;
+}
+
+.audioModels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 64px 40px;
+}
+
+/* Circuito cerrado: un solo modelo apaisado que llena la columna derecha y,
+   debajo, la explicacion del servicio. */
+.circuitModel {
+  display: grid;
+  gap: 40px;
+  width: 100%;
+}
+
+@media (max-width: 1000px) {
+  .audio,
+  .lighting {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .lighting {
+    width: min(1200px, 88%);
+    margin-inline: auto;
+  }
+
+  .stage {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 56px 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .stage,
+  .audioModels {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Reserva de alto para los servicios que aun no tienen bloques. */
+.workspace {
+  min-height: 50svh;
+}
+
+.tail {
+  height: 96px;
+}
+
+@media (max-width: 760px) {
+  .stage,
+  .audio,
+  .intro {
+    width: calc(100% - 32px);
+    margin-top: 36px;
+  }
+}

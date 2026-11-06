@@ -1,0 +1,29 @@
+/* Servicios y Eventos comparten un solo lienzo: el resplandor se calcula
+   sobre la altura de las dos secciones juntas, no sobre cada una, asi que no
+   hay manera de ver donde termina una y empieza la otra. Los porcentajes son
+   chicos porque el bloque mide mas de 2000px de alto. */
+.darkCanvas {
+  position: relative;
+  background:
+    radial-gradient(
+      52% 20% at 86% 10%,
+      rgb(var(--violeta) / 26%),
+      transparent 64%
+    ),
+    radial-gradient(
+      56% 22% at 4% 40%,
+      rgb(var(--magenta) / 20%),
+      transparent 64%
+    ),
+    radial-gradient(
+      50% 20% at 92% 66%,
+      rgb(var(--violeta) / 24%),
+      transparent 64%
+    ),
+    radial-gradient(
+      44% 16% at 18% 92%,
+      rgb(var(--magenta) / 16%),
+      transparent 64%
+    ),
+    var(--night);
+}

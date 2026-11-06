@@ -1,0 +1,106 @@
+{
+  "images/animacion-y-show/batucada-poster.jpg": [
+    96, 160, 256, 384, 480, 768, 1080, 1200
+  ],
+  "images/animacion-y-show/chisperos-poster.jpg": [96, 160, 256, 384, 480, 700],
+  "images/animacion-y-show/dj-pixelsound-1-poster.jpg": [
+    96, 160, 256, 384, 480, 760
+  ],
+  "images/animacion-y-show/dj-pixelsound-2-poster.jpg": [
+    96, 160, 256, 384, 480, 768, 1080, 1400
+  ],
+  "images/animacion-y-show/robots-led-poster.jpg": [
+    96, 160, 256, 384, 480, 768, 1080, 1280
+  ],
+  "images/clientes/cobach.png": [96, 160, 256, 384, 400],
+  "images/clientes/deluxe.png": [96, 160, 200],
+  "images/clientes/kino.png": [96, 160, 256, 300],
+  "images/clientes/normal-sonora.png": [96, 160, 198],
+  "images/clientes/unison.png": [96, 160, 200],
+  "images/eventos/bodas.jpg": [96, 160, 256, 384, 480, 768, 960],
+  "images/eventos/conciertos.jpg": [96, 160, 256, 384, 480, 768, 960],
+  "images/eventos/eventos-grandes.jpg": [96, 160, 256, 384, 480, 768, 960],
+  "images/eventos/fiestas.jpg": [96, 160, 256, 384, 480, 768, 960],
+  "images/eventos/graduaciones.jpg": [96, 160, 256, 384, 480, 768, 960],
+  "images/experiencias/alfombra-roja-2-poster.jpg": [
+    96, 160, 256, 384, 480, 608
+  ],
+  "images/experiencias/alfombra-roja-poster.jpg": [96, 160, 256, 384, 480, 608],
+  "images/experiencias/alfombra-roja.png": [
+    96, 160, 256, 384, 480, 768, 1080, 1200
+  ],
+  "images/experiencias/cabina-vogue-1-poster.jpg": [
+    96, 160, 256, 384, 480, 700
+  ],
+  "images/experiencias/cabina-vogue-2-poster.jpg": [
+    96, 160, 256, 384, 480, 700
+  ],
+  "images/experiencias/entradas-bienvenida-1-poster.jpg": [
+    96, 160, 256, 384, 480, 768, 1080, 1200
+  ],
+  "images/experiencias/entradas-bienvenida-2-poster.jpg": [
+    96, 160, 256, 384, 480, 768, 1080, 1400
+  ],
+  "images/experiencias/foto-espejo-poster.jpg": [96, 160, 256, 384, 480, 700],
+  "images/experiencias/foto-espejo.jpg": [96, 160, 256, 384, 480, 768, 852],
+  "images/experiencias/letras-iluminadas-foto.jpg": [
+    96, 160, 256, 384, 480, 768, 1080, 1275
+  ],
+  "images/experiencias/letras-iluminadas-poster.jpg": [
+    96, 160, 256, 384, 480, 608
+  ],
+  "images/experiencias/plataforma-360-foto.jpg": [
+    96, 160, 256, 384, 480, 768, 1080, 1189
+  ],
+  "images/experiencias/plataforma-360-poster.jpg": [
+    96, 160, 256, 384, 480, 768, 1080
+  ],
+  "images/hero-banner-poster.jpg": [
+    96, 160, 256, 384, 480, 768, 1080, 1440, 1600
+  ],
+  "images/inicio/equipo-vertical.jpg": [
+    96, 160, 256, 384, 480, 768, 1080, 1086
+  ],
+  "images/logopixelsaund.png": [96, 160, 256, 384, 480, 768, 940],
+  "images/nosotros/staff-1.jpg": [96, 160, 256, 384, 480, 768, 1080, 1200],
+  "images/nosotros/staff-2.jpg": [96, 160, 256, 384, 480, 768, 1080, 1200],
+  "images/nosotros/staff-3.jpg": [96, 160, 256, 384, 480, 768, 1080, 1200],
+  "images/servicios/audio-card.jpg": [96, 160, 256, 384, 480, 768, 1080, 1261],
+  "images/servicios/carrusel/alfombra-roja.jpg": [96, 160, 256, 384, 480, 720],
+  "images/servicios/carrusel/audio.jpg": [96, 160, 256, 384, 480, 720],
+  "images/servicios/carrusel/batucada.jpg": [96, 160, 256, 384, 480, 720],
+  "images/servicios/carrusel/cabina-vogue.jpg": [96, 160, 256, 384, 480, 720],
+  "images/servicios/carrusel/chisperos.jpg": [96, 160, 256, 384, 480, 720],
+  "images/servicios/carrusel/circuito-cerrado.jpg": [
+    96, 160, 256, 384, 480, 720
+  ],
+  "images/servicios/carrusel/dj-pixelsound.jpg": [96, 160, 256, 384, 480, 720],
+  "images/servicios/carrusel/entradas-bienvenida.jpg": [
+    96, 160, 256, 384, 480, 720
+  ],
+  "images/servicios/carrusel/foto-espejo.jpg": [96, 160, 256, 384, 480, 720],
+  "images/servicios/carrusel/iluminacion.jpg": [96, 160, 256, 384, 480, 720],
+  "images/servicios/carrusel/letras-iluminadas.jpg": [
+    96, 160, 256, 384, 480, 720
+  ],
+  "images/servicios/carrusel/pantallas-led.jpg": [96, 160, 256, 384, 480, 720],
+  "images/servicios/carrusel/plataforma-360.jpg": [96, 160, 256, 384, 480, 720],
+  "images/servicios/carrusel/robot-led.jpg": [96, 160, 256, 384, 480, 720],
+  "images/servicios/circuito-card.jpg": [
+    96, 160, 256, 384, 480, 768, 1080, 1100
+  ],
+  "images/servicios/experiencias-banner.jpg": [
+    96, 160, 256, 384, 480, 768, 1080, 1440, 1672
+  ],
+  "images/servicios/iluminacion-card.jpg": [96, 160, 256, 384, 480, 608],
+  "images/servicios/pantallas-card.jpg": [
+    96, 160, 256, 384, 480, 768, 1080, 1402
+  ],
+  "images/servicios/pantallas-led-portada.jpg": [
+    96, 160, 256, 384, 480, 768, 1080, 1440, 1449
+  ],
+  "images/servicios/show-banner.jpg": [
+    96, 160, 256, 384, 480, 768, 1080, 1440, 1672
+  ],
+  "images/whatsapp.png": [96, 128]
+}

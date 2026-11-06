@@ -1,0 +1,165 @@
+/* El boton y el panel solo existen en pantallas chicas; de 901px para
+   arriba manda la barra de enlaces de siempre. */
+.boton {
+  position: relative;
+  z-index: 2;
+  display: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-inline-end: -8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #e4e4e7;
+  cursor: pointer;
+}
+
+.trazos {
+  display: grid;
+  gap: 5px;
+  width: 22px;
+}
+
+.trazos span {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: currentcolor;
+  transition:
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 200ms ease;
+}
+
+/* Abierto, los tres trazos se vuelven una equis. */
+.boton[aria-expanded="true"] .trazos span:first-child {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.boton[aria-expanded="true"] .trazos span:nth-child(2) {
+  opacity: 0;
+}
+
+.boton[aria-expanded="true"] .trazos span:last-child {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.panel {
+  position: fixed;
+  z-index: 19;
+  inset: 0;
+  display: none;
+  overflow-y: auto;
+  padding: calc(var(--header-height) + 24px) 20px 40px;
+  background: rgb(6 7 8 / 96%);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  transition:
+    opacity 260ms ease,
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 320ms;
+}
+
+.panel[data-abierto="true"] {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+.panel:focus {
+  outline: none;
+}
+
+.lista {
+  display: grid;
+  gap: 26px;
+  width: min(520px, 100%);
+  margin-inline: auto;
+}
+
+.grupo {
+  display: grid;
+  gap: 10px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
+}
+
+.titulo {
+  color: hsl(38 35% 86%);
+  font-family: var(--font-inter-tight), var(--font-sans);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  text-decoration: none;
+}
+
+.apartados {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Cada apartado con area de toque comoda. */
+.apartado {
+  display: block;
+  padding: 9px 0;
+  color: rgb(221 221 224 / 78%);
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.apartado:active {
+  color: #fff;
+}
+
+.sueltos {
+  display: grid;
+  gap: 18px;
+}
+
+/* Boton de contacto: pildora llena, como la principal del inicio. */
+.cta {
+  display: grid;
+  place-items: center;
+  margin-top: 6px;
+  padding: 16px 22px;
+  border-radius: 999px;
+  background: linear-gradient(
+    100deg,
+    #8a5cc4 0%,
+    #b3559f 30%,
+    #cc6a8f 55%,
+    #d4875f 80%,
+    #d9a468 100%
+  );
+  color: #14060f;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .boton {
+    display: grid;
+  }
+
+  .panel {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trazos span,
+  .panel {
+    transition: none;
+  }
+}

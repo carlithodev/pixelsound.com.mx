@@ -1,0 +1,296 @@
+/* Mismo gris muy oscuro que la franja del logo. */
+.events {
+  /* El navegador se ahorra pintar esta seccion mientras esta fuera de
+     pantalla; el alto declarado evita saltos de la barra de scroll. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1530px;
+  position: relative;
+  padding: 140px 0 140px;
+  background: #0d0d10;
+}
+
+.inner {
+  position: relative;
+  width: min(1200px, 88%);
+  margin-inline: auto;
+}
+
+.heading {
+  max-width: 820px;
+  margin: 0 0 48px;
+  color: hsl(38 35% 86%);
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -1.4px;
+  text-wrap: balance;
+}
+
+/* Mismo degradado apagado del logo que llevan Nosotros y el boton del hero. */
+.accent {
+  background: linear-gradient(
+    100deg,
+    #8a5cc4 0%,
+    #b3559f 30%,
+    #cc6a8f 55%,
+    #d4875f 80%,
+    #d9a468 100%
+  );
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  /* Safari recorta el degradado justo en el borde de la caja y, con el
+     espaciado negativo del titular, el ultimo caracter se queda a medio
+     pintar. Este relleno alarga la caja para que quepa entero. */
+  padding-inline-end: 0.09em;
+}
+
+/* La seccion se parte en dos: a la izquierda el dato, a la derecha las
+   tarjetas en dos, dos y una. */
+.cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  gap: clamp(36px, 5vw, 84px);
+  align-items: start;
+}
+
+/* El dato se queda a la vista mientras pasan las tarjetas de al lado, y
+   mientras esta pegado se queda a media pantalla. El alto declarado es el
+   del bloque: sirve para centrarlo sin tener que medirlo en JavaScript. Una
+   caja de 100svh no sirve aqui: no le quedaria recorrido dentro de la
+   columna y se despegaria a los pocos pixeles. */
+.info {
+  --alto-info: 276px;
+
+  position: sticky;
+  top: max(
+    calc(var(--header-height) + 24px),
+    calc(50svh - var(--alto-info) / 2)
+  );
+}
+
+.numero {
+  margin: 0;
+  font-family: var(--font-inter-tight), var(--font-sans);
+  font-size: clamp(64px, 8.6vw, 126px);
+  font-weight: 650;
+  line-height: 0.95;
+  letter-spacing: -5px;
+  /* El ancho no baila mientras suben las cifras. */
+  font-variant-numeric: tabular-nums;
+}
+
+.etiqueta {
+  margin: 10px 0 0;
+  color: #e4e4e7;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.textoInfo {
+  max-width: 42ch;
+  margin: 22px 0 0;
+  color: #dddde0;
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: clamp(15px, 1.15vw, 17px);
+  line-height: 1.6;
+  letter-spacing: -0.2px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+/* La quinta va sola: centrada entre las dos columnas de arriba. */
+.card:nth-child(5) {
+  grid-column: 1 / -1;
+  width: calc(50% - 10px);
+  margin-inline: auto;
+}
+
+/* Sin transform en la tarjeta ni en la imagen: con esquinas redondeadas y
+   overflow hidden, cualquier fraccion de pixel pinta una franja clara en el
+   borde. La tarjeta se queda quieta y el hover lo cuentan el video y el
+   texto. */
+.card {
+  position: relative;
+  aspect-ratio: 24 / 25;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #0b0b0d;
+  cursor: default;
+  /* Aisla el recorte en su propia capa: bordes limpios en el redondeo. */
+  isolation: isolate;
+  transform: translateZ(0);
+}
+
+/* Mismo filtro que los videos de Servicios: todo el material, parejo. */
+.image,
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.86) saturate(1);
+}
+
+/* La imagen queda siempre; el video se funde encima al pasar el cursor. */
+.video {
+  opacity: 0;
+  transition: opacity 700ms ease;
+}
+
+.card:hover .video {
+  opacity: 1;
+}
+
+/* Degradado del texto hacia la ilustracion, como en las tarjetas de Apple. */
+.shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgb(8 8 10 / 88%) 0%,
+    rgb(8 8 10 / 62%) 14%,
+    rgb(8 8 10 / 26%) 30%,
+    transparent 46%
+  );
+  pointer-events: none;
+}
+
+.text {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  padding: 26px 28px 0;
+}
+
+/* El nombre del evento siempre a la vista, pequeno. */
+.title {
+  margin: 0;
+  color: #f7f7f8;
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+/* La frase solo aparece al pasar el cursor: sube desde debajo del nombre,
+   un paso detras del video. */
+.description {
+  max-width: 300px;
+  margin: 8px 0 0;
+  color: #f7f7f8;
+  font-size: clamp(21px, 1.8vw, 26px);
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: -0.6px;
+  text-wrap: balance;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 480ms ease 120ms,
+    transform 640ms cubic-bezier(0.22, 1, 0.36, 1) 120ms;
+}
+
+.card:hover .description {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* El degradado crece con el cursor para sostener las dos lineas extra. */
+.shade {
+  transition: background 600ms ease;
+}
+
+.card:hover .shade {
+  background: linear-gradient(
+    180deg,
+    rgb(8 8 10 / 88%) 0%,
+    rgb(8 8 10 / 66%) 24%,
+    rgb(8 8 10 / 26%) 48%,
+    transparent 66%
+  );
+}
+
+/* Sin cursor (tactil) no hay hover: la frase se queda siempre a la vista. */
+@media (hover: none) {
+  .description {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Aparicion al hacer scroll. */
+.inner[data-reveal] {
+  transition:
+    opacity 1000ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1000ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.inner[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(48px);
+}
+
+@media (max-width: 1100px) {
+  .cuerpo {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+
+  .info {
+    position: static;
+    height: auto;
+  }
+
+  .grid {
+    gap: 18px;
+  }
+}
+
+@media (max-width: 760px) {
+  .events {
+    padding: 80px 0 96px;
+  }
+
+  .inner {
+    width: calc(100% - 32px);
+  }
+
+  .heading {
+    margin-bottom: 30px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .card:nth-child(5) {
+    width: 100%;
+  }
+
+  .card {
+    border-radius: 22px;
+  }
+
+  .text {
+    padding: 22px 22px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video,
+  .shade,
+  .description,
+  .inner[data-reveal] {
+    transition: none;
+  }
+}

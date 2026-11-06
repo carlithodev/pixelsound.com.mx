@@ -1,0 +1,312 @@
+/* Entre Eventos y los logos, sobre el mismo gris muy oscuro. */
+.about {
+  /* El navegador se ahorra pintar esta seccion mientras esta fuera de
+     pantalla; el alto declarado evita saltos de la barra de scroll. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1060px;
+  display: grid;
+  place-items: center;
+  padding: 40px 0 60px;
+  background: #0d0d10;
+}
+
+/* Bloque = texto (titulo, descripcion, redes) + pila de videos. */
+.block {
+  width: min(1240px, 90%);
+}
+
+/* Sin tarjeta: los elementos van directos sobre el fondo de la seccion. */
+.card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+  gap: clamp(32px, 4vw, 56px);
+  align-items: center;
+}
+
+/* Sin esto, la fila de redes no deja encoger su columna y en pantallas
+   angostas empuja la pagina. */
+.card > * {
+  min-width: 0;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(24px, 3vw, 40px) 0;
+}
+
+.title {
+  margin: 0;
+  color: hsl(38 35% 86%);
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -1.3px;
+  text-wrap: balance;
+}
+
+/* Colores del logo en version apagada: mismos tonos, menos saturacion y
+   luminosidad, para que acompanen al blanco calido sin gritar. */
+.accent {
+  background: linear-gradient(
+    100deg,
+    #8a5cc4 0%,
+    #b3559f 30%,
+    #cc6a8f 55%,
+    #d4875f 80%,
+    #d9a468 100%
+  );
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  /* Safari recorta el degradado justo en el borde de la caja y, con el
+     espaciado negativo del titular, el ultimo caracter se queda a medio
+     pintar. Este relleno alarga la caja para que quepa entero. */
+  padding-inline-end: 0.09em;
+}
+
+.description {
+  max-width: 470px;
+  margin: 28px 0 0;
+  color: #dddde0;
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.6;
+  letter-spacing: -0.2px;
+}
+
+/* Tres franjas horizontales apiladas, cada una con su propio redondeo. */
+.stack {
+  display: grid;
+  gap: 12px;
+}
+
+.clip {
+  position: relative;
+  aspect-ratio: 12 / 5;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #0b0b0d;
+  /* Capa propia: bordes limpios en el redondeo. */
+  isolation: isolate;
+  transform: translateZ(0);
+}
+
+/* Mismo filtro que Servicios y Eventos: todo el material, parejo. */
+.video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.86) saturate(1);
+}
+
+/* Redes: lista con hilos, separada del texto por un bloque de aire. */
+.social {
+  margin-top: 44px;
+}
+
+.socialLabel {
+  margin: 0 0 6px;
+  color: #e4e4e7;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.socialList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgb(255 255 255 / 10%);
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 15px 4px;
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
+  color: #f7f7f8;
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+.socialIcon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: #e4e4e7;
+  transition: color 200ms ease;
+}
+
+.socialIcon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.socialName {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.socialHandle {
+  margin-left: 6px;
+  color: rgb(221 221 224 / 60%);
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: 13px;
+}
+
+.socialArrow {
+  flex: none;
+  width: 22px;
+  height: 10px;
+  margin-left: auto;
+  color: rgb(255 255 255 / 40%);
+  transition:
+    color 200ms ease,
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.socialLink:hover .socialIcon,
+.socialLink:hover .socialArrow {
+  color: #e5d1a2;
+}
+
+.socialLink:hover .socialArrow {
+  transform: translateX(4px);
+}
+
+/* ---- Aparicion al hacer scroll ----
+   Reveal pone data-reveal="pending" al montar y "visible" al entrar en
+   pantalla. Sin el atributo (sin JavaScript) todo se ve de entrada. */
+.block[data-reveal] {
+  transition:
+    opacity 1100ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.block[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(64px) scale(0.96);
+}
+
+.block[data-reveal] .title,
+.block[data-reveal] .description,
+.block[data-reveal] .social {
+  transition:
+    opacity 900ms ease,
+    transform 1000ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* El texto entra escalonado, un paso detras del bloque. */
+.block[data-reveal] .title {
+  transition-delay: 260ms;
+}
+
+.block[data-reveal] .description {
+  transition-delay: 440ms;
+}
+
+.block[data-reveal] .social {
+  transition-delay: 600ms;
+}
+
+.block[data-reveal="pending"] .title,
+.block[data-reveal="pending"] .description,
+.block[data-reveal="pending"] .social {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+/* Las tres franjas entran en cascada, de arriba abajo. */
+.block[data-reveal] .clip {
+  transition:
+    opacity 800ms ease,
+    transform 1000ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.block[data-reveal] .clip:nth-child(1) {
+  transition-delay: 200ms;
+}
+
+.block[data-reveal] .clip:nth-child(2) {
+  transition-delay: 340ms;
+}
+
+.block[data-reveal] .clip:nth-child(3) {
+  transition-delay: 480ms;
+}
+
+.block[data-reveal="pending"] .clip {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .block[data-reveal],
+  .block[data-reveal] .title,
+  .block[data-reveal] .description,
+  .block[data-reveal] .clip,
+  .block[data-reveal] .social {
+    transition: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .about {
+    padding: 24px 0 40px;
+  }
+
+  .block {
+    width: calc(100% - 32px);
+  }
+
+  .card {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .text {
+    padding: 0 4px;
+  }
+
+  .title {
+    letter-spacing: -1px;
+  }
+
+  .social {
+    margin-top: 34px;
+  }
+
+  /* En movil la pila va arriba y el texto debajo. */
+  .stack {
+    order: -1;
+    gap: 10px;
+  }
+
+  .clip {
+    border-radius: 16px;
+  }
+}
+
+/* Pantallas muy angostas: el arroba baja a su propio renglon. */
+@media (max-width: 420px) {
+  .socialLink {
+    flex-wrap: wrap;
+  }
+
+  .socialHandle {
+    order: 1;
+    width: 100%;
+    margin-left: 36px;
+  }
+
+  .socialArrow {
+    order: 0;
+  }
+}

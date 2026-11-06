@@ -1,0 +1,27 @@
+# Dependencias y archivos generados
+/node_modules/
+/.next/
+/out/
+/build/
+/coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Credenciales y configuracion local
+.env*
+!.env.example
+/.vercel/
+*.pem
+*.key
+
+# Material original local. Publicar solo las copias optimizadas de public/.
+/assets/
+
+# Registros y archivos del sistema
+*.log
+.DS_Store
+Thumbs.db
+
+# Resultados de verificaciones locales
+/.qa/
+cotizacion-pixelsound.pdf

@@ -1,0 +1,152 @@
+.wrap {
+  position: relative;
+}
+
+/* El disparador se ve igual que los demas enlaces de la barra. */
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: color 180ms ease;
+}
+
+.trigger:hover,
+.trigger[aria-expanded="true"] {
+  color: #fff;
+}
+
+.chevron {
+  flex: none;
+  opacity: 0.75;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.trigger[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}
+
+/* Panel de vidrio: cuelga del cuerpo de la pagina (por eso va fijo) para
+   que el desenfoque tome lo que pasa por detras. La posicion exacta la
+   calcula el componente. */
+.panel {
+  position: fixed;
+  z-index: 40;
+  width: max-content;
+  padding: 22px 26px 20px;
+  transform: translateY(-8px);
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 18px;
+  background: linear-gradient(
+    180deg,
+    rgb(16 18 20 / 72%) 0%,
+    rgb(8 10 10 / 68%) 100%
+  );
+  box-shadow:
+    0 26px 60px rgb(0 0 0 / 55%),
+    inset 0 1px 0 rgb(255 255 255 / 10%);
+  opacity: 0;
+  visibility: hidden;
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  backdrop-filter: blur(30px) saturate(180%);
+  transition:
+    opacity 220ms ease,
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 220ms;
+}
+
+.panel[data-open="true"] {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  gap: 34px;
+}
+
+.title {
+  display: inline-block;
+  margin-bottom: 12px;
+  transition: color 180ms ease;
+  color: hsl(38 35% 86%);
+  font-family: var(--font-inter-tight), var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.title:hover {
+  color: #fff;
+}
+
+.list {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: block;
+  padding: 6px 10px;
+  margin-left: -10px;
+  border-radius: 9px;
+  color: rgb(221 221 224 / 76%);
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.item:hover {
+  background: rgb(255 255 255 / 8%);
+  color: #fff;
+}
+
+/* Sin desenfoque disponible, el vidrio se vuelve mas solido. */
+@supports not (backdrop-filter: blur(1px)) {
+  .panel {
+    background: rgb(8 10 10 / 94%);
+  }
+}
+
+/* En el telefono el panel ocupa el ancho de la ventana y se apilan las
+   columnas. */
+@media (max-width: 760px) {
+  .panel {
+    max-height: 70svh;
+    padding: 18px 20px;
+    overflow-y: auto;
+  }
+
+  .columns {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron,
+  .panel,
+  .title,
+  .item {
+    transition: none;
+  }
+}

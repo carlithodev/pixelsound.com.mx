@@ -1,0 +1,242 @@
+/* Pie de pagina: el sotano del sitio, un tono por debajo del gris de las
+   secciones. Un hilo marca el corte, a proposito. */
+.footer {
+  /* El navegador se ahorra pintar esta seccion mientras esta fuera de
+     pantalla; el alto declarado evita saltos de la barra de scroll. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 560px;
+  position: relative;
+  padding: 80px 0 0;
+  border-top: 1px solid rgb(255 255 255 / 10%);
+  background: #020303;
+}
+
+.inner {
+  position: relative;
+  width: min(1200px, 88%);
+  margin-inline: auto;
+}
+
+/* Marca + tres grupos de servicios + contacto, compacto. Dos filas
+   compartidas (subgrid): encabezados en una, listas en otra, para que todas
+   arranquen a la misma altura aunque un titulo ocupe dos lineas. */
+.grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr 1fr 0.8fr;
+  grid-template-rows: auto auto;
+  gap: 0 40px;
+  align-items: start;
+  padding-bottom: 72px;
+}
+
+/* La marca se centra contra el alto de las columnas. */
+.brand {
+  grid-row: 1 / 3;
+  align-self: center;
+  max-width: 320px;
+}
+
+.column {
+  display: grid;
+  grid-row: 1 / 3;
+  grid-template-rows: subgrid;
+  align-items: start;
+}
+
+.logo {
+  display: block;
+  width: 104px;
+  height: auto;
+}
+
+.tagline {
+  margin: 22px 0 0;
+  color: rgb(221 221 224 / 62%);
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+/* Iconos desnudos, en gris; se encienden al pasar el cursor. */
+.socials {
+  display: flex;
+  gap: 24px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.socialLink {
+  display: block;
+  color: #8d8d94;
+  transition: color 200ms ease;
+}
+
+.socialLink svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.socialLink:hover {
+  color: #f7f7f8;
+}
+
+/* Tipografia de las columnas, como en la referencia: grotesca (Inter
+   Tight, abierta un pelo), encabezados pequenos y apagados, enlaces grandes y
+   claros con paso de 34px. */
+.heading {
+  margin: 0 0 26px;
+  color: rgb(221 221 224 / 55%);
+  font-family: var(--font-inter-tight), var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.list {
+  display: grid;
+  gap: 13px;
+  margin: 0;
+  padding: 0;
+  color: rgb(221 221 224 / 90%);
+  font-family: var(--font-inter-tight), var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  list-style: none;
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.link:hover {
+  color: #f7f7f8;
+}
+
+.contact {
+  gap: 24px;
+}
+
+.contactLabel {
+  display: block;
+  margin-bottom: 4px;
+  color: rgb(221 221 224 / 45%);
+  font-size: 11px;
+}
+
+.contactValue {
+  color: #dddde0;
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+a.contactValue:hover {
+  color: #e5d1a2;
+}
+
+/* Legal: un hilo y dos textos apagados en los extremos. El padding derecho
+   deja libre la esquina donde vive la burbuja de WhatsApp. */
+.legal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 88px 40px 0;
+  border-top: 1px solid rgb(255 255 255 / 8%);
+  color: rgb(221 221 224 / 42%);
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: 12px;
+}
+
+.legalLink {
+  color: inherit;
+}
+
+@media (max-width: 1000px) {
+  .grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: none;
+    gap: 44px 32px;
+  }
+
+  .brand {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .column {
+    display: block;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .footer {
+    padding-top: 56px;
+  }
+
+  .brand {
+    align-self: start;
+  }
+
+  .inner {
+    width: calc(100% - 32px);
+  }
+
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 24px;
+    padding-bottom: 48px;
+  }
+
+  .legal {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 24px 0 36px;
+  }
+}
+
+@media (max-width: 420px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Dedo: las areas de toque crecen sin mover nada de sitio. El icono social
+   sigue midiendo 20px a la vista; lo que crece es la zona pulsable, con
+   relleno compensado por un margen negativo. */
+@media (pointer: coarse) {
+  .list {
+    gap: 0;
+  }
+
+  .link {
+    display: inline-block;
+    padding-block: 9px;
+  }
+
+  .socialLink {
+    padding: 12px;
+    margin: -12px;
+  }
+
+  .contactValue {
+    display: inline-block;
+    padding-block: 8px;
+    margin-block: -8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .socialLink,
+  .contactValue {
+    transition: none;
+  }
+}

@@ -1,0 +1,260 @@
+/* Ultima seccion antes del pie, sobre el mismo gris muy oscuro. */
+.faq {
+  /* El navegador se ahorra pintar esta seccion mientras esta fuera de
+     pantalla; el alto declarado evita saltos de la barra de scroll. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+  padding: 110px 0 128px;
+  background: #0d0d10;
+}
+
+.inner {
+  width: min(1200px, 88%);
+  margin-inline: auto;
+}
+
+.cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(56px, 7.5vw, 128px);
+  align-items: start;
+}
+
+.titulo {
+  margin: 0 0 28px;
+  color: hsl(38 35% 86%);
+  font-family: var(--font-inter-tight), var(--font-sans);
+  font-size: clamp(26px, 2.6vw, 38px);
+  font-weight: 650;
+  line-height: 1.1;
+  letter-spacing: -1.2px;
+}
+
+/* Mismo degradado apagado del logo que llevan Eventos y Nosotros. */
+.accent {
+  background: linear-gradient(
+    100deg,
+    #8a5cc4 0%,
+    #b3559f 30%,
+    #cc6a8f 55%,
+    #d4875f 80%,
+    #d9a468 100%
+  );
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  /* Safari recorta el degradado justo en el borde de la caja y, con el
+     espaciado negativo del titular, el ultimo caracter se queda a medio
+     pintar. Este relleno alarga la caja para que quepa entero. */
+  padding-inline-end: 0.09em;
+}
+
+.lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgb(255 255 255 / 10%);
+}
+
+.item {
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
+}
+
+.pregunta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 2px;
+  color: #f7f7f8;
+  font-size: clamp(15px, 1.2vw, 17px);
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  cursor: pointer;
+  list-style: none;
+  transition: color 200ms ease;
+}
+
+/* Fuera el triangulito del navegador: la cruz cuenta el estado. */
+.pregunta::-webkit-details-marker {
+  display: none;
+}
+
+.pregunta:hover {
+  color: #fff;
+}
+
+.cruz {
+  flex: none;
+  color: rgb(229 209 162 / 75%);
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.item[open] .cruz {
+  transform: rotate(135deg);
+}
+
+/* El desplegado se anima: la altura pasa de 0 a la del contenido. Donde el
+   navegador no lo soporta todavia, abre de golpe como siempre. */
+.item::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    content-visibility 460ms allow-discrete;
+  transition-behavior: allow-discrete;
+}
+
+.item[open]::details-content {
+  block-size: auto;
+}
+
+.respuesta {
+  max-width: 54ch;
+  margin: 0;
+  padding: 0 2px 20px;
+  color: #dddde0;
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.6;
+  letter-spacing: -0.2px;
+}
+
+/* ---- Mapa ----
+   El lienzo lo dibuja SiteMap con teselas oscuras; aqui solo va el marco. */
+.mapa {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 24px;
+  background: #0a0a0d;
+  box-shadow: 0 28px 70px rgb(0 0 0 / 45%);
+  isolation: isolate;
+}
+
+/* Tarjeta de vidrio con la direccion. Va por encima de las capas del mapa
+   (Leaflet llega hasta 800) y no ocupa todo el ancho: deja libre la esquina
+   con los creditos. */
+.tarjeta {
+  position: absolute;
+  z-index: 1000;
+  right: auto;
+  bottom: 16px;
+  left: 16px;
+  max-width: min(74%, 440px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 18px;
+  padding: 16px 18px;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 16px;
+  background: linear-gradient(
+    180deg,
+    rgb(16 18 20 / 78%) 0%,
+    rgb(8 10 10 / 74%) 100%
+  );
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 10%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  backdrop-filter: blur(22px) saturate(170%);
+}
+
+.lugar {
+  width: 100%;
+  margin: 0;
+  color: hsl(38 35% 86%);
+  font-family: var(--font-inter-tight), var(--font-sans);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+
+.direccion {
+  margin: 0;
+  color: rgb(221 221 224 / 78%);
+  font-family: var(--font-montserrat), var(--font-sans);
+  font-size: 13.5px;
+}
+
+.ruta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  color: #e5d1a2;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 200ms ease;
+}
+
+.ruta svg {
+  flex: none;
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ruta:hover svg {
+  transform: translateX(4px);
+}
+
+/* Aparicion al hacer scroll: cada columna entra desde su lado, la del mapa
+   un paso detras. */
+.inner[data-reveal] .columna {
+  transition:
+    opacity 900ms ease,
+    transform 1000ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.inner[data-reveal] .columna:first-child {
+  transition-delay: 60ms;
+}
+
+.inner[data-reveal] .columna:last-child {
+  transition-delay: 220ms;
+}
+
+.inner[data-reveal="pending"] .columna {
+  opacity: 0;
+}
+
+.inner[data-reveal="pending"] .columna:first-child {
+  transform: translate3d(-28px, 18px, 0);
+}
+
+.inner[data-reveal="pending"] .columna:last-child {
+  transform: translate3d(28px, 18px, 0);
+}
+
+@media (max-width: 900px) {
+  .faq {
+    padding: 72px 0 88px;
+  }
+
+  .inner {
+    width: calc(100% - 32px);
+  }
+
+  .cuerpo {
+    grid-template-columns: 1fr;
+    gap: 52px;
+  }
+
+  .mapa {
+    aspect-ratio: 5 / 4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item::details-content {
+    transition: none;
+  }
+
+  .cruz,
+  .ruta svg,
+  .inner[data-reveal] .columna {
+    transition: none;
+  }
+}
