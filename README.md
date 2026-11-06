@@ -1,3 +1,9 @@
+<p align="center">
+  <img src="public/images/logopixelsaund.png" alt="PixelSaund Logo" width="180">
+</p>
+
+
+
 # PixelSaund
 
 Landing page de servicios con Next.js (App Router), React, Tailwind CSS y TypeScript. Las pantallas 3D usan Three.js con @react-three/fiber y @react-three/drei. Se publica como sitio estático en hosting Apache de VacaWeb. La cabecera y la primera sección están implementadas a partir del primer boceto de Canva, con el logo y la fotografía proporcionados por el usuario.
